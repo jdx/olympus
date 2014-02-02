@@ -1,0 +1,28 @@
+<div ng-controller="InstancesCtrl">
+  <ol class="breadcrumb">
+    <li>Instances</li>
+  </ol>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>State</th>
+        <th>ssh</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tr ng-repeat="server in servers | orderBy:status">
+      <td><a href="/instances/{{server.id}}">{{server.id}}</a></td>
+      <td>{{server.instance_type}}</td>
+      <td>{{server.status}}</td>
+      <td><input readonly select-on-click ng-if="server.public_dns_name" value="ssh core@{{server.public_dns_name}}"/></td>
+      <td>
+        <button ng-if="server.status == 'running'" type="button" ng-click="ping(server.id)" class="btn btn-default btn-xs">Ping</button>
+        <button ng-if="server.status != 'terminated'" type="button" ng-click="terminate(server.id)" class="btn btn-danger btn-xs">Terminate</button>
+      </td>
+    </tr>
+  </table>
+  <input class="btn btn-primary" type="button" ng-click="create()" value="{{status}}" />
+  <input class="btn btn-default" type="button" ng-click="refresh()" value="Refresh" />
+</div>
