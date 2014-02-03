@@ -28,6 +28,9 @@
   (instances/open-port address hermes-port)
   (load-hermes address))
 
+(defn containers [address]
+  (curl address "GET" "/containers/json"))
+
 (go (while true
       (let [address (<!! need-hermes-channel)]
         (println (load-hermes address)))))

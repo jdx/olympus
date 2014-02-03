@@ -11,7 +11,7 @@
 (defroutes app-routes
   (route/resources "/")
   (context "/api" []
-           (context "/instances" [] instances-controller/instance-routes) )
+           (context "/instances" [] instances-controller/instance-routes))
   ;; TODO: don't read this file in every time in prod
   (GET "/*" [] (io/resource "public/index.html")))
 

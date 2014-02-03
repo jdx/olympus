@@ -5,6 +5,9 @@
   (:require olympus.app))
 
 (def.controller olympus.InstanceCtrl [$scope $routeParams InstanceSvc]
+  (-> (InstanceSvc.containers $routeParams.id)
+      (.success (fn [res]
+                  (! $scope.containers res))))
   (-> (InstanceSvc.info $routeParams.id)
       (.success (fn [res]
                   (! $scope.instance res)))))

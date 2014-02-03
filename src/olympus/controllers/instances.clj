@@ -1,7 +1,8 @@
 (ns olympus.controllers.instances
   (:use compojure.core)
   (:require [olympus.docker :as docker]
-            [olympus.instances :as instances]))
+            [olympus.instances :as instances]
+            [olympus.controllers.containers :as containers-controller]))
 
 (defn create-instance []
   (println (instances/create))
@@ -15,15 +16,17 @@
                                :public_dns_name (i :public-dns-name)})}))
 
 (defn get-instance [id]
-  (let [instance (instances/by-id id)]
-    {:body {:id (instance :instance-id)
-            :docker-version (docker/version (instance :public-dns-name))}}))
+  (let [i (instances/by-id id)]
+    {:body {:id (i :instance-id)
+            :public-dns-name (i :public-dns-name)
+            :docker-version (docker/version (i :public-dns-name))}}))
 
 (defn terminate-instance [id]
   (instances/terminate id))
 
 (defroutes instance-routes
-  (GET    "/"    []   (get-instances))
-  (POST   "/"    []   (create-instance))
-  (GET    "/:id" [id] (get-instance id))
-  (DELETE "/:id" [id] (terminate-instance id)))
+  (GET     "/"    []   (get-instances))
+  (POST    "/"    []   (create-instance))
+  (GET     "/:id" [id] (get-instance id))
+  (DELETE  "/:id" [id] (terminate-instance id))
+  (context "/:id/containers" [] containers-controller/container-routes))
