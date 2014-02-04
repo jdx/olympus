@@ -3,6 +3,19 @@
     <li><a href="/instances">Instances</a></li>
     <li>{{instance.id}}</li>
   </ol>
+  <h1>{{instance.id}}</h1>
   <pre>{{ instance }}</pre>
-  <pre>{{ containers }}</pre>
+  <h2>Containers</h2>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="container in containers">
+      <h4 class="list-group-item-heading">{{container.Image}}</h4>
+      <p class="list-group-item-text">{{container}}</p>
+    </li>
+  </ul>
+  <p>
+    <button ng-click="add()" class='btn btn-default'>Add Redis</button>
+  </p>
+  <div class="progress progress-striped active">
+    <div class="progress-bar" style="width: 45%"></div>
+  </div>
 </div>

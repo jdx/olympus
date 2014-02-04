@@ -5,10 +5,11 @@
   (:require olympus.app))
 
 (def.service olympus.InstanceSvc [$http $q]
-  (obj :list       #($http.get  "/api/instances")
-       :create     #($http.post "/api/instances")
-       :info       #($http.get    (str "/api/instances/" %))
-       :ping       #($http.get    (str "/api/instances/" %))
-       :terminate  #($http.delete (str "/api/instances/" %))
-       :containers #($http.get    (str "/api/instances/" % "/containers"))))
+  (obj :list          #($http.get  "/api/instances")
+       :create        #($http.post "/api/instances")
+       :info          #($http.get    (str "/api/instances/" %))
+       :ping          #($http.get    (str "/api/instances/" %))
+       :terminate     #($http.delete (str "/api/instances/" %))
+       :containers    #($http.get    (str "/api/instances/" % "/containers"))
+       :add-container #($http.post   (str "/api/instances/" % "/containers"))))
 

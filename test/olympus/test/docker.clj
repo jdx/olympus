@@ -12,7 +12,7 @@
         (provided (instances/open-port "localhost" 22021) => true))
   (fact "gets docker version"
         (version "localhost") => "0.7.6"
-        (provided (curl "localhost" "GET" "/version") => {"Version" "0.7.6"}))
+        (provided (curl "localhost" :get "/version") => "{\"Version\":\"0.7.6\"}"))
   (with-fake-http ["http://localhost:22021/version" "{\"Version\":\"0.7.6\"}"]
     (fact "gets docker version"
-          ((curl "localhost" "GET" "/version") "Version") => "0.7.6")))
+          (curl "localhost" :get "/version") => "{\"Version\":\"0.7.6\"}")))
